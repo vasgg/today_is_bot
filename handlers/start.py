@@ -9,5 +9,6 @@ async def start_command(message: types.Message):
                               text=f'Hello, {message.from_user.full_name}!\n'
                                    f'This is @onem0redaybot\n'
                                    f'For access  to more command use\n'
+                                   f'/today\n'
                                    f'/commands\n')
 
