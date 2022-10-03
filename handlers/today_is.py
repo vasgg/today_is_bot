@@ -7,8 +7,8 @@ from calendar import monthrange
 from dateutil import tz
 
 
-@dp.message_handler(Command('today'), state=None)
-async def admin_menu(message: types.Message):
+@dp.message_handler(Command('today_is'), state=None)
+async def today_is(message: types.Message):
     today = datetime.now()
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -22,9 +22,9 @@ async def admin_menu(message: types.Message):
     numberofweeks = today.strftime('%V')
     local_timezone = str(datetime.now(tz=tz.tzlocal()))
     await dp.bot.send_message(chat_id=message.from_user.id,
-                              text=f'Today is: {dayofweek}, {dayofmonth} day of {month}\n'
-                              f'{dayofyear} day of {year}\n'
-                              f'Year progress: {round(yearprogress)}%\n'
-                              f'Week №: {numberofweeks} / 52\n'
-                              f'Month progress: {round(monthprogress)}%\n'
+                              text=f'{dayofweek}, {dayofmonth}, {month} (month progress: {round(monthprogress)}%)\n'
+                              # f'Month progress: {round(monthprogress)}%\n'
+                              f'{dayofyear} day of {year} (year progress: {round(yearprogress)}%)\n'
+                              # f'Year progress: {round(yearprogress)}%\n'
+                              f'Week: {numberofweeks}\n'
                               f'Your timezone is: UTC{local_timezone[-6:]}\n')
