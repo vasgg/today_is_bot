@@ -9,4 +9,4 @@ async def start_command(message: types.Message):
                               text=f'Hello, {message.from_user.full_name}!\n'
                                    f'This is @today_is_bot\n'
                                    f'For access  to more command use\n'
-                                   f'/menu\n')
+                                   f'/tools\n')
