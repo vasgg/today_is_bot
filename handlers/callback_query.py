@@ -21,7 +21,6 @@ async def days_operations(call: types.CallbackQuery):
         await call.answer()
 
 
-@logger.catch
 @dp.message_handler(state=Inputs.Counter)
 async def counter_input(message: types.Message, state: FSMContext):
     date_for_count = message.text
@@ -40,11 +39,11 @@ async def counter_input(message: types.Message, state: FSMContext):
         await state.reset_state(with_data=False)
     except ValueError:
         await message.answer(f'Please, enter correct value')
+        logger.debug("Entered string {} not good for date parsing", message.text)
 
 
-@logger.catch
 @dp.message_handler(state=Inputs.First_date)
-async def counter_input(message: types.Message, state: FSMContext):
+async def calculator_input_first(message: types.Message, state: FSMContext):
     first_date = message.text
     try:
         date1 = dateutil.parser.parse(first_date)
@@ -53,11 +52,11 @@ async def counter_input(message: types.Message, state: FSMContext):
         await Inputs.Second_date.set()
     except ValueError:
         await message.answer(f'Please, enter correct value')
+        logger.debug("Entered string {} not good for date parsing", message.text)
 
 
-@logger.catch
 @dp.message_handler(state=Inputs.Second_date)
-async def counter_input(message: types.Message, state: FSMContext):
+async def calculator_input_second(message: types.Message, state: FSMContext):
     second_date = message.text
     try:
         date2 = dateutil.parser.parse(second_date)
@@ -75,3 +74,16 @@ async def counter_input(message: types.Message, state: FSMContext):
         await state.reset_state(with_data=False)
     except ValueError:
         await message.answer(f'Please, enter correct value')
+        logger.debug("Entered string {} not good for date parsing", message.text)
+
+
+@dp.callback_query_handler(text='reg', state=Inputs.ChangeTimezone)
+async def current_hour(message: types.Message):
+    await dp.bot.send_message(chat_id=message.from_user.id,
+                              text=f'For correct work with different timezones,\n'
+                                   f'please enter current hour from your local timezone'
+                                   f'(Format: HH, from 00 to 23)')
+    await Inputs.Registration.set()
+
+
+

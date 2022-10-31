@@ -6,4 +6,5 @@ class Inputs(StatesGroup):
     Calculator = State()
     First_date = State()
     Second_date = State()
-    Date_argument = State()
+    Registration = State()
+    ChangeTimezone = State()
