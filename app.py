@@ -1,6 +1,8 @@
 from aiogram.utils import executor
+
+
 from handlers import dp
-from loader import db
+from loader import db, logger
 
 
 async def on_startup(dp):
@@ -12,15 +14,10 @@ async def on_startup(dp):
 
     try:
         await db.create_table_users()
-    
-    except Exception as e:
-        # logger.error(str(e.__class__) + ' ' + str(e))
-        pass
-
-    try:
         await db.create_table_records()
-        
+
     except Exception as e:
+        # logger.error(str(type(e)), str(e))
         pass
 
 
