@@ -1,8 +1,8 @@
 from aiogram.utils import executor
 
-
 from handlers import dp
 from loader import db, logger
+from utils.notify_admin import on_shutdown_notify
 
 
 async def on_startup(dp):
@@ -21,5 +21,6 @@ async def on_startup(dp):
         pass
 
 
+
 if __name__ == '__main__':
-    executor.start_polling(dp, on_startup=on_startup)
+    executor.start_polling(dp, on_startup=on_startup, on_shutdown=on_shutdown_notify)
